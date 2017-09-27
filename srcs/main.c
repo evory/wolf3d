@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 23:29:20 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/27 18:12:12 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/27 19:32:42 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int		main(int ac, char **argv)
 	close(ms->fd);
 	ms->fd = open(argv[1], O_RDONLY);
 	ft_parser(ms);
-	check_map_validity(ms);
-	
 	mlx_win_init(ms);
 	mlx_hook(ms->win, 2, (1L << 0), key_press, ms);
 	mlx_hook(ms->win, 3, (1L << 1), key_release, ms);

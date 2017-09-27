@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 23:25:30 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/27 18:53:57 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/27 19:32:45 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ typedef struct	s_ms
 	int			y_floortext;
 	int			x;
 	int			y;
-	int			map_lenght;
+	int			map_width;
+	int			map_height;
 	double		Xpos;
 	double		Ypos;
 	double		Xdir;
@@ -123,5 +124,4 @@ void			ray_casting_init(t_ms *ms, int x);
 void			floor_and_ceiling(t_ms *ms, int x);
 void			dda(t_ms *ms);
 void			dda_init(t_ms *ms);
-void			check_map_validity(t_ms *ms);
 #endif

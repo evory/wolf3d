@@ -6,19 +6,27 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 13:24:21 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/27 19:10:44 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/27 19:33:30 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-void	check_map_validity(t_ms *ms)
+void	check_map_validity(char *line, t_ms *ms)
 {
-	if (ms->array[1][1] != 0)
+	// printf("%d\n", ms->map_width);
+	int i;
+
+	i = 0;
+	while (i <= ms->map_width)
+	{
+		printf("%d\n", i);
+		if (i == 1)
 		{
-			ft_putendl("Bad map...");
-			exit(1);
+			line = "lol";
 		}
+		i++;
+	}
 }
 
 void	check_map_name(t_ms *ms)
@@ -41,10 +49,11 @@ int		**ft_fill_array(int x, int y, char **splitstr, int **tab)
 	return (tab);
 }
 
-int		**ft_malloc_array(int x, int y)
+int		**ft_malloc_array(int x, int y, t_ms *ms)
 {
 	int **tab;
 
+	ms->map_height = y;
 	tab = NULL;
 	tab = malloc(sizeof(int*) * y--);
 	while (y + 1 >= 0)
@@ -67,21 +76,19 @@ void	ft_parser(t_ms *ms)
 	while (get_next_line(ms->fd, &line) != 0)
 	{
 		x = 0;
+		check_map_validity(line, ms);
 		splitstr = ft_strsplit(line, ' ');
 		if (ms->array == NULL)
 		{
 			while (splitstr[x])
-			{
-				printf("%d\n", x);
 				x++;
-			}
-			ms->map_lenght = x;
+			ms->map_width = x;
 		}
 		else
 		{
 			ms->array = ft_fill_array(x, y, splitstr, ms->array);
 		}
-		if (ms->map_lenght < 3 && ms->array == NULL)
+		if (ms->map_width < 3 && ms->array == NULL)
 		{
 			ft_putendl("Bad map...");
 			exit(1);
@@ -89,6 +96,6 @@ void	ft_parser(t_ms *ms)
 		y++;
 	}
 	if (ms->array == NULL)
-		ms->array = ft_malloc_array(x, y);
+		ms->array = ft_malloc_array(x, y, ms);
 	free(line);
 }
