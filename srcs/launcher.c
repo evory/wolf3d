@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:17:54 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/29 03:20:59 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:24:37 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 void	dda_init(t_ms *ms)
 {
-	ms->Xdeltadist = sqrt(1 + (ms->Yradiry * ms->Yradiry)
-			/ (ms->Xradiry * ms->Xradiry));
-	ms->Ydeltadist = sqrt(1 + (ms->Xradiry * ms->Xradiry)
-			/ (ms->Yradiry * ms->Yradiry));
-	if (ms->Xradiry < 0)
+	ms->deltadistx = sqrt(1 + (ms->radiry * ms->radiry)
+			/ (ms->radirx * ms->radirx));
+	ms->deltadisty = sqrt(1 + (ms->radirx * ms->radirx)
+			/ (ms->radiry * ms->radiry));
+	if (ms->radirx < 0)
 	{
 		ms->stepx = -1;
-		ms->Xsidedist = (ms->Xraposy - ms->mapx) * ms->Xdeltadist;
+		ms->sidedistx = (ms->raposx - ms->mapx) * ms->deltadistx;
 	}
 	else
 	{
 		ms->stepx = 1;
-		ms->Xsidedist = (ms->mapx + 1.0 - ms->Xraposy) * ms->Xdeltadist;
+		ms->sidedistx = (ms->mapx + 1.0 - ms->raposx) * ms->deltadistx;
 	}
-	if (ms->Yradiry < 0)
+	if (ms->radiry < 0)
 	{
 		ms->stepy = -1;
-		ms->Ysidedist = (ms->Yraposy - ms->mapy) * ms->Ydeltadist;
+		ms->sidedisty = (ms->raposy - ms->mapy) * ms->deltadisty;
 	}
 	else
 	{
 		ms->stepy = 1;
-		ms->Ysidedist = (ms->mapy + 1.0 - ms->Yraposy) * ms->Ydeltadist;
+		ms->sidedisty = (ms->mapy + 1.0 - ms->raposy) * ms->deltadisty;
 	}
 }
 
@@ -45,15 +45,15 @@ void	dda(t_ms *ms)
 	ms->hit = 0;
 	while (ms->hit == 0)
 	{
-		if (ms->Xsidedist < ms->Ysidedist)
+		if (ms->sidedistx < ms->sidedisty)
 		{
-			ms->Xsidedist += ms->Xdeltadist;
+			ms->sidedistx += ms->deltadistx;
 			ms->mapx += ms->stepx;
 			ms->side = 0;
 		}
 		else
 		{
-			ms->Ysidedist += ms->Ydeltadist;
+			ms->sidedisty += ms->deltadisty;
 			ms->mapy += ms->stepy;
 			ms->side = 1;
 		}
@@ -64,21 +64,21 @@ void	dda(t_ms *ms)
 
 void	ray_casting_init(t_ms *ms, int x)
 {
-	ms->Xcam = 2 * x / (double)(WDTH) - 1;
-	ms->Xraposy = ms->posx;
-	ms->Yraposy = ms->posy;
-	ms->Xradiry = ms->dirx + ms->Xplane * ms->Xcam;
-	ms->Yradiry = ms->diry + ms->planey * ms->Xcam;
-	ms->mapx = (int)ms->Xraposy;
-	ms->mapy = (int)ms->Yraposy;
+	ms->camx = 2 * x / (double)(WDTH) - 1;
+	ms->raposx = ms->posx;
+	ms->raposy = ms->posy;
+	ms->radirx = ms->dirx + ms->planex * ms->camx;
+	ms->radiry = ms->diry + ms->planey * ms->camx;
+	ms->mapx = (int)ms->raposx;
+	ms->mapy = (int)ms->raposy;
 	dda_init(ms);
 	dda(ms);
 	if (ms->side == 0)
-		ms->walldist = (ms->mapx - ms->Xraposy +
-				(1 - ms->stepx) / 2) / ms->Xradiry;
+		ms->walldist = (ms->mapx - ms->raposx +
+				(1 - ms->stepx) / 2) / ms->radirx;
 	else
-		ms->walldist = (ms->mapy - ms->Yraposy +
-				(1 - ms->stepy) / 2) / ms->Yradiry;
+		ms->walldist = (ms->mapy - ms->raposy +
+				(1 - ms->stepy) / 2) / ms->radiry;
 }
 
 void	launch_wolf(t_ms *ms)

@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 23:29:20 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/29 03:20:59 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:31:58 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	wolf3d_init(t_ms *ms)
 	ms->posy = 6;
 	ms->dirx = -1;
 	ms->diry = 0;
-	ms->Xplane = 0;
+	ms->planex = 0;
 	ms->planey = 0.66;
 	ms->ms = 0.06;
 	ms->rs = 0.05;

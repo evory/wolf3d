@@ -6,7 +6,7 @@
 #    By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/28 15:51:08 by bbrandt           #+#    #+#              #
-#    Updated: 2017/09/29 01:28:47 by bbrandt          ###   ########.fr        #
+#    Updated: 2017/09/29 03:34:04 by bbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C lib/libft
-	gcc $(FLAGS) -L lib/libft/ -lft -L/usr/local/lib -lmlx -framework OpenGL -framework AppKit $(SRC) -o $(NAME) -g
+	gcc $(FLAGS) -L lib/libft/ -lft -L/usr/local/lib -lmlx -framework OpenGL -framework AppKit $(SRC) -o $(NAME)
 	@echo "wolf3d done"
 
 clean:

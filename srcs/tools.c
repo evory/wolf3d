@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 13:20:41 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/29 03:20:29 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:25:31 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	draw_wall(int x, int start, int end, t_ms *ms)
 	{
 		ms->id = ms->array[ms->mapx][ms->mapy];
 		if (ms->side == 0)
-			ms->Xwall = ms->Yraposy + ms->walldist * ms->Yradiry;
+			ms->wallx = ms->raposy + ms->walldist * ms->radiry;
 		else
-			ms->Xwall = ms->Xraposy + ms->walldist * ms->Xradiry;
-		ms->textx = (int)(ms->Xwall * (double)(64));
-		if (ms->side == 0 && ms->Xradiry > 0)
+			ms->wallx = ms->raposx + ms->walldist * ms->radirx;
+		ms->textx = (int)(ms->wallx * (double)(64));
+		if (ms->side == 0 && ms->radirx > 0)
 			ms->textx = 64 - ms->textx - 1;
 		ms->textx = abs(ms->textx);
 	}

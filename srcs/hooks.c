@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 16:10:59 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/29 03:20:59 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:25:18 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,21 @@ void	move_side(t_ms *ms)
 {
 	if (ms->move_right == 1)
 	{
-		ms->Xolddir = ms->dirx;
+		ms->olddirx = ms->dirx;
 		ms->dirx = ms->dirx * cos(-ms->rs) - ms->diry * sin(-ms->rs);
-		ms->diry = ms->Xolddir * sin(-ms->rs) + ms->diry * cos(-ms->rs);
-		ms->Xoldplane = ms->Xplane;
-		ms->Xplane = ms->Xplane * cos(-ms->rs) - ms->planey * sin(-ms->rs);
-		ms->planey = ms->Xoldplane * sin(-ms->rs) + ms->planey * cos(-ms->rs);
+		ms->diry = ms->olddirx * sin(-ms->rs) + ms->diry * cos(-ms->rs);
+		ms->oldplanex = ms->planex;
+		ms->planex = ms->planex * cos(-ms->rs) - ms->planey * sin(-ms->rs);
+		ms->planey = ms->oldplanex * sin(-ms->rs) + ms->planey * cos(-ms->rs);
 	}
 	if (ms->move_left == 1)
 	{
-		ms->Xolddir = ms->dirx;
+		ms->olddirx = ms->dirx;
 		ms->dirx = ms->dirx * cos(ms->rs) - ms->diry * sin(ms->rs);
-		ms->diry = ms->Xolddir * sin(ms->rs) + ms->diry * cos(ms->rs);
-		ms->Xoldplane = ms->Xplane;
-		ms->Xplane = ms->Xplane * cos(ms->rs) - ms->planey * sin(ms->rs);
-		ms->planey = ms->Xoldplane * sin(ms->rs) + ms->planey * cos(ms->rs);
+		ms->diry = ms->olddirx * sin(ms->rs) + ms->diry * cos(ms->rs);
+		ms->oldplanex = ms->planex;
+		ms->planex = ms->planex * cos(ms->rs) - ms->planey * sin(ms->rs);
+		ms->planey = ms->oldplanex * sin(ms->rs) + ms->planey * cos(ms->rs);
 	}
 }
 
