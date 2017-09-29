@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 16:10:59 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/27 17:33:59 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:20:59 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int		key_press(int keycode, t_ms *ms)
 	else if (keycode == 0 || keycode == 123)
 		ms->move_left = 1;
 	else if (keycode == 257 || keycode == 258)
+	{
 		ms->ms = 0.1;
+		ms->rs = 0.025;
+	}
 	else if (keycode == 53)
 		exit(1);
 	else if (keycode == 117)
@@ -63,7 +66,10 @@ int		key_release(int keycode, t_ms *ms)
 	else if (keycode == 0 || keycode == 123)
 		ms->move_left = 0;
 	else if (keycode == 257 || keycode == 258)
+	{
 		ms->ms = 0.05;
+		ms->rs = 0.05;
+	}
 	return (0);
 }
 
@@ -71,21 +77,21 @@ void	move_side(t_ms *ms)
 {
 	if (ms->move_right == 1)
 	{
-		ms->Xolddir = ms->Xdir;
-		ms->Xdir = ms->Xdir * cos(-ms->rs) - ms->Ydir * sin(-ms->rs);
-		ms->Ydir = ms->Xolddir * sin(-ms->rs) + ms->Ydir * cos(-ms->rs);
+		ms->Xolddir = ms->dirx;
+		ms->dirx = ms->dirx * cos(-ms->rs) - ms->diry * sin(-ms->rs);
+		ms->diry = ms->Xolddir * sin(-ms->rs) + ms->diry * cos(-ms->rs);
 		ms->Xoldplane = ms->Xplane;
-		ms->Xplane = ms->Xplane * cos(-ms->rs) - ms->Yplane * sin(-ms->rs);
-		ms->Yplane = ms->Xoldplane * sin(-ms->rs) + ms->Yplane * cos(-ms->rs);
+		ms->Xplane = ms->Xplane * cos(-ms->rs) - ms->planey * sin(-ms->rs);
+		ms->planey = ms->Xoldplane * sin(-ms->rs) + ms->planey * cos(-ms->rs);
 	}
 	if (ms->move_left == 1)
 	{
-		ms->Xolddir = ms->Xdir;
-		ms->Xdir = ms->Xdir * cos(ms->rs) - ms->Ydir * sin(ms->rs);
-		ms->Ydir = ms->Xolddir * sin(ms->rs) + ms->Ydir * cos(ms->rs);
+		ms->Xolddir = ms->dirx;
+		ms->dirx = ms->dirx * cos(ms->rs) - ms->diry * sin(ms->rs);
+		ms->diry = ms->Xolddir * sin(ms->rs) + ms->diry * cos(ms->rs);
 		ms->Xoldplane = ms->Xplane;
-		ms->Xplane = ms->Xplane * cos(ms->rs) - ms->Yplane * sin(ms->rs);
-		ms->Yplane = ms->Xoldplane * sin(ms->rs) + ms->Yplane * cos(ms->rs);
+		ms->Xplane = ms->Xplane * cos(ms->rs) - ms->planey * sin(ms->rs);
+		ms->planey = ms->Xoldplane * sin(ms->rs) + ms->planey * cos(ms->rs);
 	}
 }
 
@@ -93,17 +99,21 @@ int		move(t_ms *ms)
 {
 	if (ms->move_up == 1)
 	{
-		if (ms->array[(int)(ms->Xpos + ms->Xdir * ms->ms)][(int)(ms->Ypos)] == 0)
-			ms->Xpos += ms->Xdir * ms->ms;
-		if (ms->array[(int)(ms->Xpos)][(int)(ms->Ypos + ms->Ydir * ms->ms)] == 0)
-			ms->Ypos += ms->Ydir * ms->ms;
+		if (ms->array[(int)(ms->posx + ms->dirx * ms->ms)][(int)(ms->posy)]
+		== 0)
+			ms->posx += ms->dirx * ms->ms;
+		if (ms->array[(int)(ms->posx)][(int)(ms->posy + ms->diry * ms->ms)]
+		== 0)
+			ms->posy += ms->diry * ms->ms;
 	}
 	if (ms->move_down == 1)
 	{
-		if (ms->array[(int)(ms->Xpos - ms->Xdir * ms->ms)][(int)(ms->Ypos)] == 0)
-			ms->Xpos -= ms->Xdir * ms->ms;
-		if (ms->array[(int)(ms->Xpos)][(int)(ms->Ypos - ms->Ydir * ms->ms)] == 0)
-			ms->Ypos -= ms->Ydir * ms->ms;
+		if (ms->array[(int)(ms->posx - ms->dirx * ms->ms)][(int)(ms->posy)]
+		== 0)
+			ms->posx -= ms->dirx * ms->ms;
+		if (ms->array[(int)(ms->posx)][(int)(ms->posy - ms->diry * ms->ms)]
+		== 0)
+			ms->posy -= ms->diry * ms->ms;
 	}
 	move_side(ms);
 	launch_wolf(ms);

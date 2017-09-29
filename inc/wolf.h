@@ -6,7 +6,7 @@
 /*   By: bbrandt <bbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 23:25:30 by bbrandt           #+#    #+#             */
-/*   Updated: 2017/09/27 19:32:45 by bbrandt          ###   ########.fr       */
+/*   Updated: 2017/09/29 03:20:59 by bbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@
 # include <fcntl.h>
 # include "../lib/minilibx_macos/mlx.h"
 # include <math.h>
-
-
-
-# include <stdio.h>
-
-
 
 # define WDTH 800
 # define HGHT 600
@@ -46,16 +40,15 @@ typedef struct	s_ms
 	void		*img_ptr;
 	int			**array;
 	int			fd;
-	char 		*name;
 	int			nb_lines;
 	int			lenline;
 	int			bpp;
 	int			endian;
 	int			sl;
-	int			Xmap;
-	int			Ymap;
-	int			Xstep;
-	int			Ystep;
+	int			mapx;
+	int			mapy;
+	int			stepx;
+	int			stepy;
 	int			hit;
 	int			side;
 	int			lineheight;
@@ -67,8 +60,8 @@ typedef struct	s_ms
 	int			move_left;
 	int			move_right;
 	int			help;
-	int			Xtext;
-	int			Ytext;
+	int			textx;
+	int			texty;
 	int			id;
 	t_tex		tex[9];
 	int			texture;
@@ -78,17 +71,17 @@ typedef struct	s_ms
 	int			y;
 	int			map_width;
 	int			map_height;
-	double		Xpos;
-	double		Ypos;
-	double		Xdir;
-	double		Ydir;
+	double		posx;
+	double		posy;
+	double		dirx;
+	double		diry;
 	double		Xplane;
-	double		Yplane;
+	double		planey;
 	double		Xcam;
-	double		Xraypos;
-	double		Yraypos;
-	double		Xraydir;
-	double		Yraydir;
+	double		Xraposy;
+	double		Yraposy;
+	double		Xradiry;
+	double		Yradiry;
 	double		Xsidedist;
 	double		Ysidedist;
 	double		Xdeltadist;
@@ -111,7 +104,6 @@ void			move_side(t_ms *ms);
 int				move(t_ms *ms);
 
 void			load_textures(t_ms *ms);
-void			load_textures2(t_ms *ms, int a, int b);
 
 void			mlx_win_init(t_ms *ms);
 void			wolf3d_init(t_ms *ms);
@@ -121,7 +113,8 @@ void			ft_parser(t_ms *ms);
 
 void			launch_wolf(t_ms *ms);
 void			ray_casting_init(t_ms *ms, int x);
-void			floor_and_ceiling(t_ms *ms, int x);
+void			sky_ground(t_ms *ms, int x);
 void			dda(t_ms *ms);
 void			dda_init(t_ms *ms);
+int				cross_close(void);
 #endif
